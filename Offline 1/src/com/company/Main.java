@@ -2,6 +2,48 @@ package com.company;
 
 import java.util.ArrayList;
 
+class Bank
+{
+    double fund;
+    ArrayList<Account> accounts;
+    ArrayList<Employee> employees;
+
+    final double INIT_FUND = 1000000;
+
+    Bank()
+    {
+        fund = INIT_FUND;
+        accounts = new ArrayList<Account>();
+        employees = new ArrayList<Employee>();
+
+        Managing_Director MD = new Managing_Director();
+        Officer O1 = new Officer();
+        Officer O2 = new Officer();
+        Cashier C1 = new Cashier();
+        Cashier C2 = new Cashier();
+        Cashier C3 = new Cashier();
+        Cashier C4 = new Cashier();
+        Cashier C5 = new Cashier();
+
+        employees.add(MD);
+        employees.add(O1);
+        employees.add(O2);
+        employees.add(C1);
+        employees.add(C2);
+        employees.add(C3);
+        employees.add(C4);
+        employees.add(C5);
+    }
+
+    public double getFund() {
+        return fund;
+    }
+
+    public void setFund(double fund) {
+        this.fund = fund;
+    }
+}
+
 abstract class Account
 {
     private String ac_type;
@@ -78,6 +120,8 @@ class Savings extends Account
         setAc_type("Savings");
     }
 
+    static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;};
+
     public boolean createAccount(int balance,String name)
     {
         setBalance(balance);
@@ -122,6 +166,8 @@ class Student extends Account
     {
         setAc_type("Student");
     }
+
+    static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;};
 
     public boolean createAccount(int balance,String name)
     {
@@ -214,7 +260,6 @@ class Fixed_Deposit extends Account
     }
 }
 
-
 abstract class Employee
 {
     private String em_type;
@@ -228,8 +273,9 @@ abstract class Employee
     }
 
     public int lookup(Account ac) { return ac.getBalance(); }
-    abstract public boolean approveLoan();
-    abstract public boolean changeInterestRate();
+    abstract public boolean canApproveLoan();
+    abstract public boolean changeInterestRate(String ac_type,double new_rate);
+    abstract public boolean canSeeInternalFund();
 }
 
 class Managing_Director extends Employee
@@ -239,11 +285,53 @@ class Managing_Director extends Employee
         setEm_type("Managing Director");
     }
 
-    public boolean approveLoan(){return true;}
-    public boolean changeInterestRate(String ac_type)
+    public boolean canApproveLoan(){return true;}
+    public boolean changeInterestRate(String ac_type,double new_rate)
     {
+        if(ac_type=="Savings")
+        {
+            Savings.changeDepositInterestRate(new_rate);
+        }
+        else if(ac_type=="Student")
+        {
+            Student.changeDepositInterestRate(new_rate);
+        }
+        else if(ac_type=="Fixed_Deposit")
+        {
+            Fixed_Deposit.changeDepositInterestRate(new_rate);
+        }
 
+        return true;
     }
+
+    public boolean canSeeInternalFund() { return true; }
+    public double seeInternalFund(Bank b) { return b.getFund(); }
+}
+
+class Officer extends Employee
+{
+    Officer()
+    {
+        setEm_type("Officer");
+    }
+
+    public boolean canApproveLoan(){ return true; }
+    public boolean changeInterestRate(String ac_type,double new_rate) { return false; }
+
+    public boolean canSeeInternalFund() { return false; }
+}
+
+class Cashier extends Employee
+{
+    Cashier()
+    {
+        setEm_type("Cashier");
+    }
+
+    public boolean canApproveLoan(){ return false; }
+    public boolean changeInterestRate(String ac_type,double new_rate) { return false; }
+
+    public boolean canSeeInternalFund() { return false; }
 }
 
 public class Main {
@@ -251,24 +339,24 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
-        ArrayList<Account> accounts = new ArrayList<Account>();
+        Bank b = new Bank();
 
         Savings sv1 = new Savings();
         sv1.createAccount(10,"A");
-        accounts.add(sv1);
+        b.accounts.add(sv1);
 
         Savings sv2 = new Savings();
         sv2.createAccount(10,"B");
-        accounts.add(sv2);
+        b.accounts.add(sv2);
 
         Savings sv3 = new Savings();
-        if(sv3.pkEnsured(accounts,"B"))
+        if(sv3.pkEnsured(b.accounts,"B"))
         {
             sv3.createAccount(10,"B");
-            accounts.add(sv3);
+            b.accounts.add(sv3);
         }
 
-        for(Account ac:accounts)
+        for(Account ac:b.accounts)
         {
             System.out.println(ac.getName());
         }
