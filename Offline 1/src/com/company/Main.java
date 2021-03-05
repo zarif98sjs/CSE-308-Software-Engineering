@@ -47,9 +47,16 @@ class Bank
 abstract class Account
 {
     private String ac_type;
-    private int balance;
+    private double balance;
     private String name;
-    private int loan;
+    private double loan;
+    private double pendingLoan;
+
+    Account()
+    {
+        loan = 0;
+        pendingLoan = 0;
+    }
 
     final double LOAN_INTEREST_RATE = 10.0;
 
@@ -61,29 +68,30 @@ abstract class Account
         this.ac_type = ac_type;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public int getLoan() {
+    public double getLoan() {
         return loan;
     }
-
-    public void setLoan(int loan) {
+    public void setLoan(double loan) {
         this.loan = loan;
     }
+
+    public double getPendingLoan() { return pendingLoan; }
+    public void setPendingLoan(double pendingLoan) { this.pendingLoan = pendingLoan; }
 
     public boolean pkEnsured(ArrayList<Account> accounts, String name)
     {
@@ -96,22 +104,22 @@ abstract class Account
         return true;
     }
 
-    public void addBalance(int amount) { this.balance += amount; }
-    public void removeBalance(int amount) { this.balance += amount; }
+    public void addBalance(double amount) { this.balance += amount; }
+    public void removeBalance(double amount) { this.balance += amount; }
 
-    public void addLoan(int amount) { this.loan += amount; }
-//    public void removeLoan(int amount) { this.loan += amount; }
+    public void addLoan(double amount) { this.loan += amount; }
+//    public void removeLoan(double amount) { this.loan += amount; }
 
-    abstract public boolean createAccount(int balance,String name);
-    abstract public boolean deposit(int amount);
-    abstract public boolean withdraw(int amount);
-    abstract public boolean requestLoan(int amount);
+    abstract public boolean createAccount(double balance,String name);
+    abstract public boolean deposit(double amount);
+    abstract public boolean withdraw(double amount);
+    abstract public boolean requestLoan(double amount);
 }
 
 class Savings extends Account
 {
-    final int MIN_BALANCE = 1000;
-    final int MAX_LOAN = 10000;
+    final double MIN_BALANCE = 1000;
+    final double MAX_LOAN = 10000;
     static double DEPOSIT_INTEREST_RATE = 10.0;
     double SERVICE_CHARGE = 500.0;
 
@@ -122,7 +130,7 @@ class Savings extends Account
 
     static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;};
 
-    public boolean createAccount(int balance,String name)
+    public boolean createAccount(double balance,String name)
     {
         setBalance(balance);
         setName(name);
@@ -130,13 +138,13 @@ class Savings extends Account
         return true;
     }
 
-    public boolean deposit(int amount)
+    public boolean deposit(double amount)
     {
         addBalance(amount);
         return true;
     }
 
-    public boolean withdraw(int amount)
+    public boolean withdraw(double amount)
     {
         if(amount > getBalance()) return false;
 
@@ -148,18 +156,21 @@ class Savings extends Account
         return false;
     }
 
-    public boolean requestLoan(int amount)
+    public boolean requestLoan(double amount)
     {
-        if(getLoan()+amount <= MAX_LOAN)  return true; // loan request valid
-
+        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN)
+        {
+            setPendingLoan(getPendingLoan()+amount);
+            return true; // loan request valid
+        }
         return false;
     }
 }
 
 class Student extends Account
 {
-    final int WITHDRAWAL_LIMIT = 10000;
-    final int MAX_LOAN = 1000;
+    final double WITHDRAWAL_LIMIT = 10000;
+    final double MAX_LOAN = 1000;
     static double DEPOSIT_INTEREST_RATE = 5.0;
 
     Student()
@@ -169,7 +180,7 @@ class Student extends Account
 
     static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;};
 
-    public boolean createAccount(int balance,String name)
+    public boolean createAccount(double balance,String name)
     {
         setBalance(balance);
         setName(name);
@@ -177,13 +188,13 @@ class Student extends Account
         return true;
     }
 
-    public boolean deposit(int amount)
+    public boolean deposit(double amount)
     {
         addBalance(amount);
         return true;
     }
 
-    public boolean withdraw(int amount)
+    public boolean withdraw(double amount)
     {
         if(amount > getBalance()) return false;
 
@@ -196,9 +207,13 @@ class Student extends Account
         return false;
     }
 
-    public boolean requestLoan(int amount)
+    public boolean requestLoan(double amount)
     {
-        if(getLoan()+amount <= MAX_LOAN)  return true; // loan request valid
+        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN)
+        {
+            setPendingLoan(getPendingLoan()+amount);
+            return true; // loan request valid
+        }
 
         return false;
     }
@@ -207,9 +222,9 @@ class Student extends Account
 
 class Fixed_Deposit extends Account
 {
-    final int MIN_INIT_DEPOSIT = 100000;
-    final int MIN_DEPOSIT = 50000;
-    final int MAX_LOAN = 100000;
+    final double MIN_INIT_DEPOSIT = 100000;
+    final double MIN_DEPOSIT = 50000;
+    final double MAX_LOAN = 100000;
     static double DEPOSIT_INTEREST_RATE = 15.0;
     final double SERVICE_CHARGE = 500.0;
 
@@ -220,7 +235,7 @@ class Fixed_Deposit extends Account
 
     static void changeDepositInterestRate(double new_rate) { DEPOSIT_INTEREST_RATE = new_rate; }
 
-    public boolean createAccount(int balance,String name)
+    public boolean createAccount(double balance,String name)
     {
         if(balance >= MIN_INIT_DEPOSIT)
         {
@@ -232,7 +247,7 @@ class Fixed_Deposit extends Account
         return false;
     }
 
-    public boolean deposit(int amount)
+    public boolean deposit(double amount)
     {
         if(amount >= MIN_DEPOSIT)
         {
@@ -243,7 +258,7 @@ class Fixed_Deposit extends Account
         return false;
     }
 
-    public boolean withdraw(int amount)
+    public boolean withdraw(double amount)
     {
         if(amount > getBalance()) return false;
 
@@ -252,10 +267,13 @@ class Fixed_Deposit extends Account
         return false;
     }
 
-    public boolean requestLoan(int amount)
+    public boolean requestLoan(double amount)
     {
-        if(getLoan()+amount <= MAX_LOAN)  return true; // loan request valid
-
+        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN)
+        {
+            setPendingLoan(getPendingLoan()+amount);
+            return true; // loan request valid
+        }
         return false;
     }
 }
@@ -267,12 +285,11 @@ abstract class Employee
     public String getEm_type() {
         return em_type;
     }
-
     public void setEm_type(String em_type) {
         this.em_type = em_type;
     }
 
-    public int lookup(Account ac) { return ac.getBalance(); }
+    public double lookup(Account ac) { return ac.getBalance(); }
     abstract public boolean canApproveLoan();
     abstract public boolean changeInterestRate(String ac_type,double new_rate);
     abstract public boolean canSeeInternalFund();
