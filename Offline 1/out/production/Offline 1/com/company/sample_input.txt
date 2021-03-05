@@ -1,0 +1,8 @@
+Create Alice Student 1000
+Deposit 20000
+Withdraw 12000
+Query
+Request 500
+Close
+Open O1
+Approve Loan
