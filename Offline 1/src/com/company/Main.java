@@ -1,22 +1,17 @@
 /*
 *
-* Pending Tasks
-* - CLOCK
-* - withdrawal condition with clock for fixed deposit
-* - loan interest rate calc with INC
+* TO DO
+* - handle service charge
 *
-* 
+*
+*
+*
 * */
-
 package com.company;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
-/*
-* Bank
-* */
 
 class Bank
 {
@@ -53,6 +48,16 @@ class Bank
 
     public double getFund() { return fund; }
     public void setFund(double fund) { this.fund = fund; }
+
+    public boolean pkEnsured(String name)
+    {
+        for(Account ac:accounts)
+        {
+            if(ac.getName().equals(name))
+                return false;
+        }
+        return true;
+    }
 
     boolean isEmployee(String name)
     {
@@ -115,12 +120,31 @@ class Bank
             }
         }
     }
+
+    public void increaseYear()
+    {
+        for(Account ac:accounts)
+        {
+            ac.setAc_age(ac.getAc_age()+1);
+
+            double cur_loan = ac.getLoan() , cur_balance = ac.getBalance();
+            double deposit_interest = 0.0;
+            double loan_interest = cur_loan * ac.LOAN_INTEREST_RATE * 0.01;
+
+            // handle account
+            if(ac.getAc_type().equals("Savings")){ deposit_interest = cur_balance * Savings.getDepositInterestRate() * 0.01; }
+            if(ac.getAc_type().equals("Student")){ deposit_interest = cur_balance * Student.getDepositInterestRate() * 0.01; }
+            if(ac.getAc_type().equals("Fixed_Deposit")){ deposit_interest = cur_balance * Fixed_Deposit.getDepositInterestRate() * 0.01; }
+
+            ac.addBalance(deposit_interest);
+            ac.removeBalance(loan_interest);
+
+            // handle bank
+            fund -= deposit_interest;
+            fund += loan_interest;
+        }
+    }
 }
-
-/*
- * Account
- * */
-
 
 abstract class Account
 {
@@ -129,13 +153,14 @@ abstract class Account
     private String name;
     private double loan;
     private double pendingLoan;
+    private int ac_age;
 
     Account()
     {
         loan = 0;
         pendingLoan = 0;
+        ac_age = 0;
     }
-
 
     final double LOAN_INTEREST_RATE = 10.0;
 
@@ -154,6 +179,9 @@ abstract class Account
     public double getPendingLoan() { return pendingLoan; }
     public void setPendingLoan(double pendingLoan) { this.pendingLoan = pendingLoan; }
 
+    public int getAc_age() { return ac_age; }
+    public void setAc_age(int ac_age) { this.ac_age = ac_age; }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -164,17 +192,6 @@ abstract class Account
                 ", pendingLoan=" + pendingLoan +
                 ", LOAN_INTEREST_RATE=" + LOAN_INTEREST_RATE +
                 '}';
-    }
-
-    public boolean pkEnsured(ArrayList<Account> accounts, String name)
-    {
-        for(Account ac:accounts)
-        {
-            if(ac.getName()==name)
-                return false;
-        }
-
-        return true;
     }
 
     public void addBalance(double amount) { this.balance += amount; }
@@ -196,18 +213,15 @@ class Savings extends Account
     static double DEPOSIT_INTEREST_RATE = 10.0;
     double SERVICE_CHARGE = 500.0;
 
-    Savings()
-    {
-        setAc_type("Savings");
-    }
+    Savings() { setAc_type("Savings"); }
 
-    static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;};
+    public static double getDepositInterestRate() { return DEPOSIT_INTEREST_RATE; }
+    public static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;}
 
     public boolean createAccount(double balance,String name)
     {
         setBalance(balance);
         setName(name);
-
         return true;
     }
 
@@ -221,8 +235,7 @@ class Savings extends Account
     {
         if(amount > getBalance()) return false;
 
-        if(getBalance()-amount >= MIN_BALANCE)
-        {
+        if(getBalance()-amount >= MIN_BALANCE) {
             removeBalance(amount);
             return true;
         }
@@ -231,8 +244,7 @@ class Savings extends Account
 
     public boolean requestLoan(double amount)
     {
-        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN)
-        {
+        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN) {
             setPendingLoan(getPendingLoan()+amount);
             return true; // loan request valid
         }
@@ -246,18 +258,15 @@ class Student extends Account
     final double MAX_LOAN = 1000;
     static double DEPOSIT_INTEREST_RATE = 5.0;
 
-    Student()
-    {
-        setAc_type("Student");
-    }
+    Student() { setAc_type("Student"); }
 
-    static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;};
+    public static double getDepositInterestRate() { return DEPOSIT_INTEREST_RATE; }
+    public static void changeDepositInterestRate(double new_rate){ DEPOSIT_INTEREST_RATE = new_rate;}
 
     public boolean createAccount(double balance,String name)
     {
         setBalance(balance);
         setName(name);
-
         return true;
     }
 
@@ -271,23 +280,19 @@ class Student extends Account
     {
         if(amount > getBalance()) return false;
 
-        if(amount <= WITHDRAWAL_LIMIT)
-        {
+        if(amount <= WITHDRAWAL_LIMIT) {
             removeBalance(amount);
             return true;
         }
-
         return false;
     }
 
     public boolean requestLoan(double amount)
     {
-        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN)
-        {
+        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN) {
             setPendingLoan(getPendingLoan()+amount);
             return true; // loan request valid
         }
-
         return false;
     }
 
@@ -301,33 +306,27 @@ class Fixed_Deposit extends Account
     static double DEPOSIT_INTEREST_RATE = 15.0;
     final double SERVICE_CHARGE = 500.0;
 
-    Fixed_Deposit()
-    {
-        setAc_type("Fixed_Deposit");
-    }
+    Fixed_Deposit() { setAc_type("Fixed_Deposit"); }
 
+    public static double getDepositInterestRate() { return DEPOSIT_INTEREST_RATE; }
     static void changeDepositInterestRate(double new_rate) { DEPOSIT_INTEREST_RATE = new_rate; }
 
     public boolean createAccount(double balance,String name)
     {
-        if(balance >= MIN_INIT_DEPOSIT)
-        {
+        if(balance >= MIN_INIT_DEPOSIT) {
             setBalance(balance);
             setName(name);
             return true;
         }
-
         return false;
     }
 
     public boolean deposit(double amount)
     {
-        if(amount >= MIN_DEPOSIT)
-        {
+        if(amount >= MIN_DEPOSIT) {
             addBalance(amount);
             return true;
         }
-
         return false;
     }
 
@@ -335,15 +334,17 @@ class Fixed_Deposit extends Account
     {
         if(amount > getBalance()) return false;
 
-        // need to add the condition of maturity period
+        if(getAc_age()>=1) {
+            removeBalance(amount);
+            return true;
+        }
 
         return false;
     }
 
     public boolean requestLoan(double amount)
     {
-        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN)
-        {
+        if(getLoan()+getPendingLoan()+amount <= MAX_LOAN) {
             setPendingLoan(getPendingLoan()+amount);
             return true; // loan request valid
         }
@@ -351,30 +352,16 @@ class Fixed_Deposit extends Account
     }
 }
 
-/*
-*
-* EMPLOYEE
-*
-* */
-
 abstract class Employee
 {
     private String em_type;
     private String name;
 
-    public String getEm_type() {
-        return em_type;
-    }
-    public void setEm_type(String em_type) {
-        this.em_type = em_type;
-    }
+    public String getEm_type() { return em_type; }
+    public void setEm_type(String em_type) { this.em_type = em_type; }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     @Override
     public String toString() {
@@ -401,24 +388,19 @@ class Managing_Director extends Employee
     public boolean canApproveLoan(){return true;}
     public boolean changeInterestRate(String ac_type,double new_rate)
     {
-        if(ac_type=="Savings")
-        {
+        if(ac_type.equals("Savings")) {
             Savings.changeDepositInterestRate(new_rate);
         }
-        else if(ac_type=="Student")
-        {
+        else if(ac_type.equals("Student")) {
             Student.changeDepositInterestRate(new_rate);
         }
-        else if(ac_type=="Fixed_Deposit")
-        {
+        else if(ac_type.equals("Fixed_Deposit")) {
             Fixed_Deposit.changeDepositInterestRate(new_rate);
         }
-
         return true;
     }
 
     public boolean canSeeInternalFund() { return true; }
-    public double seeInternalFund(Bank b) { return b.getFund(); }
 }
 
 class Officer extends Employee
@@ -431,7 +413,6 @@ class Officer extends Employee
 
     public boolean canApproveLoan(){ return true; }
     public boolean changeInterestRate(String ac_type,double new_rate) { return false; }
-
     public boolean canSeeInternalFund() { return false; }
 }
 
@@ -445,38 +426,16 @@ class Cashier extends Employee
 
     public boolean canApproveLoan(){ return false; }
     public boolean changeInterestRate(String ac_type,double new_rate) { return false; }
-
     public boolean canSeeInternalFund() { return false; }
 }
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+
 
         Bank b = new Bank();
 
-//        Savings sv1 = new Savings();
-//        sv1.createAccount(10,"A");
-//        b.accounts.add(sv1);
-//
-//        Savings sv2 = new Savings();
-//        sv2.createAccount(10,"B");
-//        b.accounts.add(sv2);
-//
-//        Savings sv3 = new Savings();
-//        if(sv3.pkEnsured(b.accounts,"B"))
-//        {
-//            sv3.createAccount(10,"B");
-//            b.accounts.add(sv3);
-//        }
-//
-//        for(Account ac:b.accounts)
-//        {
-//            System.out.println(ac.getName());
-//        }
-
-        Object people = null;
         Employee curEmployee = null;
         Account curAccount = null;
 
@@ -503,19 +462,29 @@ public class Main {
                 String init_balance_s = commands.get(3);
                 double init_balance = Double.parseDouble(init_balance_s);
 
+                if(!b.pkEnsured(name))
+                {
+                    System.out.println("A user with this name already exists");
+                    continue;
+                }
+
                 Account ac = null;
 
-                if(ac_type.equals("Student")) { ac = new Student(); }
-                else if(ac_type.equals("Savings")) { ac = new Savings(); }
-                else if(ac_type.equals("Fixed_Deposit")) { ac = new Fixed_Deposit(); }
+                if(ac_type.equals("Student"))  ac = new Student();
+                else if(ac_type.equals("Savings"))  ac = new Savings();
+                else if(ac_type.equals("Fixed_Deposit"))  ac = new Fixed_Deposit();
 
-                ac.createAccount(init_balance,name);
-                b.accounts.add(ac);
-                System.out.println(ac_type+" account for "+name+" Created; initial balance "+init_balance+"$");
-//                System.out.println(ac);
+                if(ac.createAccount(init_balance,name))
+                {
+                    b.accounts.add(ac);
+                    System.out.println(ac_type+" account for "+name+" Created; initial balance "+init_balance+"$");
 
-                curAccount = ac;
-                isEmployeeLoggedIn = false;
+                    curAccount = ac;
+                    isEmployeeLoggedIn = false;
+                }
+                else{
+                    System.out.println("Can not create account");
+                }
             }
             if(command.equals("Open"))
             {
@@ -528,19 +497,15 @@ public class Main {
 
                     System.out.print(name + " Active,");
 
-                    if(b.isLoanPending())
-                    {
-                        System.out.println("There are loans pending");
-                    }
-                    else
-                    {
-                        System.out.println("There are no loans pending");
-                    }
+                    if(b.isLoanPending()) System.out.println("There are loans pending");
+                    else System.out.println("There are no loans pending");
                 }
                 else
                 {
                     curAccount = (Account)b.getPeople(name);
                     isEmployeeLoggedIn = false;
+
+                    System.out.println("Welcome back," + curAccount.getName());
                 }
             }
             if(command.equals("Deposit"))
@@ -553,7 +518,6 @@ public class Main {
                     if(curAccount.deposit(amount))
                     {
                         System.out.println(amount+"$ deposited; current balance "+curAccount.getBalance()+"$");
-//                        System.out.println(curAccount);
                     }
                     else
                     {
@@ -575,12 +539,10 @@ public class Main {
 
                 if(!isEmployeeLoggedIn)
                 {
-                    if(curAccount.withdraw(amount))
-                    {
+                    if(curAccount.withdraw(amount)) {
                         System.out.println(amount+"$ Withdrawn ; current balance "+curAccount.getBalance()+"$");
                     }
-                    else
-                    {
+                    else {
                         System.out.println("Invalid Transaction; current balance "+curAccount.getBalance()+"$");
                     }
                 }
@@ -594,31 +556,25 @@ public class Main {
                 String amount_s = commands.get(1);
                 double amount = Double.parseDouble(amount_s);
 
-
                 if(!isEmployeeLoggedIn)
                 {
-                    if(curAccount.requestLoan(amount))
-                    {
+                    if(curAccount.requestLoan(amount)) {
                         System.out.println("Loan request successful , sent for approval");
                     }
-                    else
-                    {
+                    else {
                         System.out.println("Failed to grant loan request");
                     }
                 }
-                else if(isEmployeeLoggedIn)
-                {
+                else if(isEmployeeLoggedIn) {
                     System.out.println("You are in employee account , login from customer account");
                 }
             }
             if(command.equals("Query"))
             {
-                if(!isEmployeeLoggedIn)
-                {
-                    System.out.println("Current balance "+curAccount.getBalance()+"$");
+                if(!isEmployeeLoggedIn) {
+                    System.out.println("Current balance "+curAccount.getBalance()+"$ , Loan "+curAccount.getLoan());
                 }
-                else if(isEmployeeLoggedIn)
-                {
+                else if(isEmployeeLoggedIn) {
                     System.out.println("You are in employee account , login from customer account");
                 }
             }
@@ -627,36 +583,30 @@ public class Main {
                 String name = commands.get(1);
                 Account ac = (Account) b.getPeople(name);
 
-                if(!isEmployeeLoggedIn)
-                {
+                if(!isEmployeeLoggedIn) {
                     System.out.println("You don't have any permission for this operation");
                 }
-                else if(isEmployeeLoggedIn)
-                {
-                    System.out.println(name+"'s current account balance "+ac.getBalance()+"$");
+                else if(isEmployeeLoggedIn) {
+                    System.out.println(name+"'s current account balance "+curEmployee.lookup(ac)+"$");
                 }
             }
             if(command.equals("Approve"))
             {
-                if(!isEmployeeLoggedIn)
-                {
+                if(!isEmployeeLoggedIn) {
                     System.out.println("You don't have any permission for this operation");
                     continue;
                 }
 
                 if(curEmployee.canApproveLoan())
                 {
-                    if(b.isLoanPending())
-                    {
+                    if(b.isLoanPending()) {
                         b.approveLoan();
                     }
-                    else
-                    {
+                    else {
                         System.out.println("No loans pending to approve");
                     }
                 }
-                else
-                {
+                else {
                     System.out.println("You don't have any permission for this operation");
                 }
             }
@@ -666,37 +616,34 @@ public class Main {
                 String new_rate_s = commands.get(2);
                 double new_rate = Double.parseDouble(new_rate_s);
 
-                if(curEmployee.changeInterestRate(ac_type,new_rate))
-                {
+                if(curEmployee.changeInterestRate(ac_type,new_rate)) {
                     System.out.println("Interest rate for "+ac_type+" has been changed to "+new_rate);
                 }
-                else
-                {
+                else {
                     System.out.println("You don't have any permission for this operation");
                 }
             }
             if(command.equals("See"))
             {
-                if(curEmployee.canSeeInternalFund())
-                {
+                if(curEmployee.canSeeInternalFund()) {
                     System.out.println("Bank Internal Fund "+b.getFund());
                 }
-                else
-                {
+                else {
                     System.out.println("You don't have any permission for this operation");
                 }
             }
+            if(command.equals("INC"))
+            {
+                b.increaseYear();
+            }
             if(command.equals("Close"))
             {
-                if(!isEmployeeLoggedIn)
-                {
+                if(!isEmployeeLoggedIn) {
                     System.out.println("Transaction Closed for "+curAccount.getName());
                 }
-                else
-                {
+                else {
                     System.out.println("Operations for "+curEmployee.getName()+" closed");
                 }
-
 
                 curAccount = null;
                 curEmployee = null;
@@ -704,13 +651,6 @@ public class Main {
                 isEmployeeLoggedIn = false;
             }
 
-//            Employee p1 = (Employee) b.getPeople("MD");
-//            Object p2 = b.getPeople("Alice");
-//
-//            System.out.println(p1);
-//            System.out.println(p2);
-
-//            break;
         }
     }
 }
