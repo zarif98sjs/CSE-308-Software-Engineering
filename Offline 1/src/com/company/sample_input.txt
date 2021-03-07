@@ -10,3 +10,9 @@ Change Student 7.50
 Lookup Alice
 Open Alice
 Query
+
+
+Create Bob Fixed_Deposit 100000
+Deposit 50000
+Withdraw 100
+Request 90000
