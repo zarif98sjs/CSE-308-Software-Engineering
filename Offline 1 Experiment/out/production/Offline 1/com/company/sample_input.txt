@@ -7,6 +7,7 @@ Close
 Open O1
 Approve Loan
 Change Student 7.50
+Change Fixed_Deposit 20
 Lookup Alice
 Close
 Open Alice
@@ -14,6 +15,12 @@ Query
 
 
 Create Bob Fixed_Deposit 100000
+Create Bob Fixed_Deposit 99999
 Deposit 50000
-Withdraw 100
-Request 90000
+Deposit 40000
+Withdraw 1000
+INC
+Withdraw 10000
+Withdraw 200000
+Request 200000
+Request 50000

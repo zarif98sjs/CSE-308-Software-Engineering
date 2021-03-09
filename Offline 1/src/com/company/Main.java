@@ -1,8 +1,4 @@
-/*
-*
-* TO DO
-* - handle service charge
-* */
+
 package com.company;
 
 import java.util.ArrayList;
