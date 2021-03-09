@@ -8,6 +8,7 @@ Open O1
 Approve Loan
 Change Student 7.50
 Lookup Alice
+Close
 Open Alice
 Query
 
