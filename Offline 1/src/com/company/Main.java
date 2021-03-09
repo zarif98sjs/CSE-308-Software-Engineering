@@ -1,6 +1,12 @@
 
 package com.company;
 
+import account.Account;
+import account.Fixed_Deposit;
+import account.Savings;
+import account.Student;
+import employee.Employee;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -8,7 +14,6 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) {
-
 
         Bank b = new Bank();
 
@@ -97,9 +102,7 @@ public class Main {
                     }
                     else
                     {
-                        /*
-                            handle time
-                        * */
+                        // handled time for F_D
                         System.out.println("Failed to Deposit");
                     }
                 }

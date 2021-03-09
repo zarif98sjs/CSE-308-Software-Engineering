@@ -1,5 +1,14 @@
 package com.company;
 
+import account.Account;
+import account.Fixed_Deposit;
+import account.Savings;
+import account.Student;
+import employee.Cashier;
+import employee.Employee;
+import employee.Managing_Director;
+import employee.Officer;
+
 import java.util.ArrayList;
 
 class Bank
@@ -118,7 +127,7 @@ class Bank
 
             double cur_loan = ac.getLoan() , cur_balance = ac.getBalance() , service_charge = 0.0;
             double deposit_interest = 0.0;
-            double loan_interest = cur_loan * ac.LOAN_INTEREST_RATE * 0.01;
+            double loan_interest = cur_loan * Account.getLoanInterestRate() * 0.01;
 
             // handle account
             if(ac.getAc_type().equals("Savings")){ deposit_interest = cur_balance * Savings.getDepositInterestRate() * 0.01; service_charge = Savings.getServiceCharge(); }
