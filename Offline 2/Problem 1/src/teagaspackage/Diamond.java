@@ -1,11 +1,13 @@
 package teagaspackage;
 
-import component.weightmeasurement.LoadSensor;
-import component.weightmeasurement.WeightMeasurement;
+import microcontroller.ArduinoMega;
 import microcontroller.Microncontroller;
 import microcontroller.RaspberryPi;
 
 public class Diamond implements TeaGASPackage{
+
+    String name;
+    Microncontroller microncontroller;
 
     public String createName() {
         return "Diamond";
@@ -15,7 +17,19 @@ public class Diamond implements TeaGASPackage{
         return new RaspberryPi();
     }
 
-    public WeightMeasurement createWeightMeasurement() {
-        return new LoadSensor();
+    public void create()
+    {
+        name = createName();
+        microncontroller = createMicrocontroller();
+        microncontroller.create();
+        microncontroller.setWeightMeasurement("LoadSensor");
+    }
+
+    @Override
+    public String toString() {
+        return "Diamond{" +
+                "name='" + name + '\'' +
+                ", microncontroller=" + microncontroller +
+                '}';
     }
 }

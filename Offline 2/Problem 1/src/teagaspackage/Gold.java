@@ -1,11 +1,13 @@
 package teagaspackage;
 
-import component.weightmeasurement.WeightMeasurement;
-import component.weightmeasurement.WeightModule;
+import microcontroller.ATMega32;
 import microcontroller.ArduinoMega;
 import microcontroller.Microncontroller;
 
 public class Gold implements TeaGASPackage{
+
+    String name;
+    Microncontroller microncontroller;
 
     public String createName() {
         return "Gold";
@@ -15,7 +17,19 @@ public class Gold implements TeaGASPackage{
         return new ArduinoMega();
     }
 
-    public WeightMeasurement createWeightMeasurement() {
-        return new WeightModule();
+    public void create()
+    {
+        name = createName();
+        microncontroller = createMicrocontroller();
+        microncontroller.create();
+        microncontroller.setWeightMeasurement("WeightModule");
+    }
+
+    @Override
+    public String toString() {
+        return "Gold{" +
+                "name='" + name + '\'' +
+                ", microncontroller=" + microncontroller +
+                '}';
     }
 }

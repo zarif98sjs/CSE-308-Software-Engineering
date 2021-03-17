@@ -1,15 +1,23 @@
 package microcontroller;
 
-import component.controller.BuiltInController;
-import component.controller.Controller;
-import component.display.Display;
-import component.display.TouchScreen;
-import component.identification.Identfication;
-import component.identification.NFC;
-import component.storage.BuiltInStorage;
-import component.storage.Storage;
+import component.hardware.controller.BuiltInController;
+import component.hardware.controller.Controller;
+import component.hardware.display.Display;
+import component.hardware.display.TouchScreen;
+import component.hardware.identification.Identfication;
+import component.hardware.identification.NFC;
+import component.hardware.storage.BuiltInStorage;
+import component.hardware.storage.Storage;
+import component.hardware.weightmeasurement.WeightMeasurement;
 
-public class RaspberryPi implements Microncontroller {
+public class RaspberryPi extends Microncontroller {
+
+    Identfication identfication;
+    Storage storage;
+    Display display;
+    Controller controller;
+    WeightMeasurement weightMeasurement;
+
     @Override
     public Identfication createIdentification() {
         return new NFC();
@@ -30,8 +38,28 @@ public class RaspberryPi implements Microncontroller {
         return new BuiltInController();
     }
 
+    public void setWeightMeasurement(String name)
+    {
+        weightMeasurement = createWeightMeasurement(name);
+    }
+
+    @Override
+    public void create()
+    {
+        identfication = createIdentification();
+        storage = createStorage();
+        display = createDisplay();
+        controller = createController();
+    }
+
     @Override
     public String toString() {
-        return "RaspberryPi";
+        return "RaspberryPi{" +
+                "identfication=" + identfication +
+                ", storage=" + storage +
+                ", display=" + display +
+                ", controller=" + controller +
+                ", weightMeasurement=" + weightMeasurement +
+                '}';
     }
 }

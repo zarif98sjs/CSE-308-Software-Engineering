@@ -1,15 +1,22 @@
 package microcontroller;
 
-import component.controller.AddOnController;
-import component.controller.Controller;
-import component.display.Display;
-import component.display.LED;
-import component.identification.Identfication;
-import component.identification.RFID;
-import component.storage.SDCard;
-import component.storage.Storage;
+import component.hardware.controller.AddOnController;
+import component.hardware.controller.Controller;
+import component.hardware.display.Display;
+import component.hardware.display.LED;
+import component.hardware.identification.Identfication;
+import component.hardware.identification.RFID;
+import component.hardware.storage.SDCard;
+import component.hardware.storage.Storage;
+import component.hardware.weightmeasurement.WeightMeasurement;
 
-public class ATMega32 implements Microncontroller {
+public class ATMega32 extends Microncontroller {
+
+    Identfication identfication;
+    Storage storage;
+    Display display;
+    Controller controller;
+    WeightMeasurement weightMeasurement;
 
     @Override
     public Identfication createIdentification() {
@@ -31,8 +38,28 @@ public class ATMega32 implements Microncontroller {
         return new AddOnController();
     }
 
+    public void setWeightMeasurement(String name)
+    {
+        weightMeasurement = createWeightMeasurement(name);
+    }
+
+    @Override
+    public void create()
+    {
+        identfication = createIdentification();
+        storage = createStorage();
+        display = createDisplay();
+        controller = createController();
+    }
+
     @Override
     public String toString() {
-        return "ATMega32";
+        return "ATMega32{" +
+                "identfication=" + identfication +
+                ", storage=" + storage +
+                ", display=" + display +
+                ", controller=" + controller +
+                ", weightMeasurement=" + weightMeasurement +
+                '}';
     }
 }

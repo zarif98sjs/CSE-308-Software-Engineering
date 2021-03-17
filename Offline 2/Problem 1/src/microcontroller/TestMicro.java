@@ -1,6 +1,6 @@
 package microcontroller;
 
-import component.identification.Identfication;
+import component.hardware.identification.Identfication;
 
 public class TestMicro {
 

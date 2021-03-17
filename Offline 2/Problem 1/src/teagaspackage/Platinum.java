@@ -1,11 +1,12 @@
 package teagaspackage;
 
-import component.weightmeasurement.WeightMeasurement;
-import component.weightmeasurement.WeightModule;
 import microcontroller.Microncontroller;
 import microcontroller.RaspberryPi;
 
 public class Platinum implements TeaGASPackage{
+
+    String name;
+    Microncontroller microncontroller;
 
     public String createName() {
         return "Platinum";
@@ -15,7 +16,19 @@ public class Platinum implements TeaGASPackage{
         return new RaspberryPi();
     }
 
-    public WeightMeasurement createWeightMeasurement() {
-        return new WeightModule();
+    public void create()
+    {
+        name = createName();
+        microncontroller = createMicrocontroller();
+        microncontroller.create();
+        microncontroller.setWeightMeasurement("WeightModule");
+    }
+
+    @Override
+    public String toString() {
+        return "Platinum{" +
+                "name='" + name + '\'' +
+                ", microncontroller=" + microncontroller +
+                '}';
     }
 }

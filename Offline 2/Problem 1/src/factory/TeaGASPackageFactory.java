@@ -6,17 +6,27 @@ public class TeaGASPackageFactory extends TeaGASPackageAbstractFactory {
 
     public TeaGASPackage getTeaGASPackage(String name)
     {
+        TeaGASPackage t;
+
         if(name.equalsIgnoreCase("silver")) {
-            return new Silver();
+            t = new Silver();
+            t.create();
+            return t;
         }
         else if(name.equalsIgnoreCase("gold")) {
-            return new Gold();
+            t = new Gold();
+            t.create();
+            return t;
         }
         else if(name.equalsIgnoreCase("diamond")) {
-            return new Diamond();
+            t = new Diamond();
+            t.create();
+            return t;
         }
         else if(name.equalsIgnoreCase("platinum")) {
-            return new Platinum();
+            t = new Platinum();
+            t.create();
+            return t;
         }
 
         return null;

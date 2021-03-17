@@ -1,11 +1,12 @@
 package teagaspackage;
 
-import component.weightmeasurement.LoadSensor;
-import component.weightmeasurement.WeightMeasurement;
 import microcontroller.ATMega32;
 import microcontroller.Microncontroller;
 
 public class Silver implements TeaGASPackage{
+
+    String name;
+    Microncontroller microncontroller;
 
     public String createName() {
         return "Silver";
@@ -15,7 +16,19 @@ public class Silver implements TeaGASPackage{
         return new ATMega32();
     }
 
-    public WeightMeasurement createWeightMeasurement() {
-        return new LoadSensor();
+    public void create()
+    {
+        name = createName();
+        microncontroller = createMicrocontroller();
+        microncontroller.create();
+        microncontroller.setWeightMeasurement("LoadSensor");
+    }
+
+    @Override
+    public String toString() {
+        return "Silver{" +
+                "name='" + name + '\'' +
+                ", microncontroller=" + microncontroller +
+                '}';
     }
 }
