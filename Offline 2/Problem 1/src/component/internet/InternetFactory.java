@@ -1,15 +1,9 @@
-package factory;
-
-import component.internet.Ethernet;
-import component.internet.GSM;
-import component.internet.Internet;
-import component.internet.WiFi;
+package component.internet;
 
 
-public class InternetFactory extends InternetAbstractFactory{
+public class InternetFactory{
 
-    @Override
-    public Internet getInternet(String name) {
+    public static Internet getInternet(String name) {
 
         if(name.equalsIgnoreCase("ethernet")) {
             return new Ethernet();

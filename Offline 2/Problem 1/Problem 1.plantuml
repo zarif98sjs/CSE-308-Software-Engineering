@@ -1,0 +1,288 @@
+@startuml
+
+title __PROBLEM 1's Class Diagram__\n
+
+  namespace com.company {
+    class com.company.Main {
+    }
+  }
+  
+
+  namespace component.framework {
+    class component.framework.Django {
+    }
+  }
+  
+
+  namespace component.framework {
+    interface component.framework.Framework {
+    }
+  }
+  
+
+  namespace component.framework {
+    class component.framework.FrameworkFactory {
+    }
+  }
+  
+
+  namespace component.framework {
+    class component.framework.Laravel {
+    }
+  }
+  
+
+  namespace component.framework {
+    class component.framework.Spring {
+    }
+  }
+  
+
+  namespace component.hardware.controller {
+    class component.hardware.controller.AddOnController {
+    }
+  }
+  
+
+  namespace component.hardware.controller {
+    class component.hardware.controller.BuiltInController {
+    }
+  }
+  
+
+  namespace component.hardware.controller {
+    interface component.hardware.controller.Controller {
+    }
+  }
+  
+
+  namespace component.hardware.display {
+    interface component.hardware.display.Display {
+    }
+  }
+  
+
+  namespace component.hardware.display {
+    class component.hardware.display.LCD {
+    }
+  }
+  
+
+  namespace component.hardware.display {
+    class component.hardware.display.LED {
+    }
+  }
+  
+
+  namespace component.hardware.display {
+    class component.hardware.display.TouchScreen {
+    }
+  }
+  
+
+  namespace component.hardware.identification {
+    interface component.hardware.identification.Identfication {
+    }
+  }
+  
+
+  namespace component.hardware.identification {
+    class component.hardware.identification.NFC {
+    }
+  }
+  
+
+  namespace component.hardware.identification {
+    class component.hardware.identification.RFID {
+    }
+  }
+  
+
+  namespace component.hardware.storage {
+    class component.hardware.storage.BuiltInStorage {
+    }
+  }
+  
+
+  namespace component.hardware.storage {
+    class component.hardware.storage.SDCard {
+    }
+  }
+  
+
+  namespace component.hardware.storage {
+    interface component.hardware.storage.Storage {
+    }
+  }
+  
+
+  namespace component.hardware.weightmeasurement {
+    class component.hardware.weightmeasurement.LoadSensor {
+    }
+  }
+  
+
+  namespace component.hardware.weightmeasurement {
+    interface component.hardware.weightmeasurement.WeightMeasurement {
+    }
+  }
+  
+
+  namespace component.hardware.weightmeasurement {
+    class component.hardware.weightmeasurement.WeightModule {
+    }
+  }
+  
+
+  namespace component.internet {
+    class component.internet.Ethernet {
+    }
+  }
+  
+
+  namespace component.internet {
+    class component.internet.GSM {
+    }
+  }
+  
+
+  namespace component.internet {
+    interface component.internet.Internet {
+    }
+  }
+  
+
+  namespace component.internet {
+    class component.internet.InternetFactory {
+    }
+  }
+  
+
+  namespace component.internet {
+    class component.internet.WiFi {
+    }
+  }
+  
+
+  namespace microcontroller {
+    class microcontroller.ATMega32 {
+    }
+  }
+  
+
+  namespace microcontroller {
+    class microcontroller.ArduinoMega {
+    }
+  }
+  
+
+  namespace microcontroller {
+    abstract class microcontroller.Microncontroller {
+    }
+  }
+  
+
+  namespace microcontroller {
+    class microcontroller.RaspberryPi {
+    }
+  }
+  
+
+  namespace product {
+    class product.Product {
+    }
+  }
+  
+
+  namespace teagaspackage {
+    class teagaspackage.Diamond {
+    }
+  }
+  
+
+  namespace teagaspackage {
+    class teagaspackage.Gold {
+    }
+  }
+  
+
+  namespace teagaspackage {
+    class teagaspackage.Platinum {
+    }
+  }
+  
+
+  namespace teagaspackage {
+    class teagaspackage.Silver {
+    }
+  }
+  
+
+  namespace teagaspackage {
+    interface teagaspackage.TeaGASPackage {
+    }
+  }
+  
+
+  namespace teagaspackage {
+    class teagaspackage.TeaGASPackageFactory {
+    }
+  }
+  
+
+  component.framework.Django .up.|> component.framework.Framework
+  component.framework.Laravel .up.|> component.framework.Framework
+  component.framework.Spring .up.|> component.framework.Framework
+  component.hardware.controller.AddOnController .up.|> component.hardware.controller.Controller
+  component.hardware.controller.BuiltInController .up.|> component.hardware.controller.Controller
+  component.hardware.display.LCD .up.|> component.hardware.display.Display
+  component.hardware.display.LED .up.|> component.hardware.display.Display
+  component.hardware.display.TouchScreen .up.|> component.hardware.display.Display
+  component.hardware.identification.NFC .up.|> component.hardware.identification.Identfication
+  component.hardware.identification.RFID .up.|> component.hardware.identification.Identfication
+  component.hardware.storage.BuiltInStorage .up.|> component.hardware.storage.Storage
+  component.hardware.storage.SDCard .up.|> component.hardware.storage.Storage
+  component.hardware.weightmeasurement.LoadSensor .up.|> component.hardware.weightmeasurement.WeightMeasurement
+  component.hardware.weightmeasurement.WeightModule .up.|> component.hardware.weightmeasurement.WeightMeasurement
+  component.internet.Ethernet .up.|> component.internet.Internet
+  component.internet.GSM .up.|> component.internet.Internet
+  component.internet.WiFi .up.|> component.internet.Internet
+  microcontroller.ATMega32 -up-|> microcontroller.Microncontroller
+  microcontroller.ATMega32 o-- component.hardware.controller.Controller : controller
+  microcontroller.ATMega32 o-- component.hardware.display.Display : display
+  microcontroller.ATMega32 o-- component.hardware.identification.Identfication : identfication
+  microcontroller.ATMega32 o-- component.hardware.storage.Storage : storage
+  microcontroller.ATMega32 o-- component.hardware.weightmeasurement.WeightMeasurement : weightMeasurement
+  microcontroller.ArduinoMega -up-|> microcontroller.Microncontroller
+  microcontroller.ArduinoMega o-- component.hardware.controller.Controller : controller
+  microcontroller.ArduinoMega o-- component.hardware.display.Display : display
+  microcontroller.ArduinoMega o-- component.hardware.identification.Identfication : identfication
+  microcontroller.ArduinoMega o-- component.hardware.storage.Storage : storage
+  microcontroller.ArduinoMega o-- component.hardware.weightmeasurement.WeightMeasurement : weightMeasurement
+  microcontroller.RaspberryPi -up-|> microcontroller.Microncontroller
+  microcontroller.RaspberryPi o-- component.hardware.controller.Controller : controller
+  microcontroller.RaspberryPi o-- component.hardware.display.Display : display
+  microcontroller.RaspberryPi o-- component.hardware.identification.Identfication : identfication
+  microcontroller.RaspberryPi o-- component.hardware.storage.Storage : storage
+  microcontroller.RaspberryPi o-- component.hardware.weightmeasurement.WeightMeasurement : weightMeasurement
+  product.Product o-- component.framework.Framework : framework
+  product.Product o-- component.internet.Internet : internet
+  product.Product o-- teagaspackage.TeaGASPackage : teaGASPackage
+  teagaspackage.Diamond .up.|> teagaspackage.TeaGASPackage
+  teagaspackage.Diamond o-- microcontroller.Microncontroller : microncontroller
+  teagaspackage.Gold .up.|> teagaspackage.TeaGASPackage
+  teagaspackage.Gold o-- microcontroller.Microncontroller : microncontroller
+  teagaspackage.Platinum .up.|> teagaspackage.TeaGASPackage
+  teagaspackage.Platinum o-- microcontroller.Microncontroller : microncontroller
+  teagaspackage.Silver .up.|> teagaspackage.TeaGASPackage
+  teagaspackage.Silver o-- microcontroller.Microncontroller : microncontroller
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

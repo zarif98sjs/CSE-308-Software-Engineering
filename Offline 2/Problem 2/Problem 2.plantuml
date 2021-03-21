@@ -1,0 +1,268 @@
+@startuml
+
+title __PROBLEM 2's Class Diagram__\n
+
+namespace aesthetics {
+    interface aesthetics.Aesthetics {
+        {abstract} + create()
+        {abstract} + createColor()
+        {abstract} + createFont()
+        {abstract} + createStyle()
+        {abstract} + toString()
+    }
+  }
+
+
+  namespace aesthetics {
+    class aesthetics.AestheticsFactory {
+        {static} + getAesthetics()
+    }
+  }
+
+
+  namespace aesthetics {
+    class aesthetics.CAesthetics {
+        + create()
+        + createColor()
+        + createFont()
+        + createStyle()
+        + toString()
+        ~ CAesthetics()
+    }
+  }
+
+
+  namespace aesthetics {
+    class aesthetics.CPPAesthetics {
+        + create()
+        + createColor()
+        + createFont()
+        + createStyle()
+        + toString()
+        ~ CPPAesthetics()
+    }
+  }
+
+
+  namespace aesthetics {
+    class aesthetics.PythonAesthetics {
+        + create()
+        + createColor()
+        + createFont()
+        + createStyle()
+        + toString()
+        ~ PythonAesthetics()
+    }
+  }
+  
+
+  namespace aesthetics {
+    namespace color {
+      class aesthetics.color.Blue {
+          + toString()
+      }
+    }
+  }
+
+
+  namespace aesthetics {
+    namespace color {
+      interface aesthetics.color.Color {
+          {abstract} + toString()
+      }
+    }
+  }
+  
+
+  namespace aesthetics {
+    namespace font {
+      class aesthetics.font.Consolas {
+          + toString()
+      }
+    }
+  }
+
+
+  namespace aesthetics {
+    namespace font {
+      class aesthetics.font.CourierNew {
+          + toString()
+      }
+    }
+  }
+
+
+  namespace aesthetics {
+    namespace font {
+      interface aesthetics.font.Font {
+          {abstract} + toString()
+      }
+    }
+  }
+
+
+  namespace aesthetics {
+    namespace font {
+      class aesthetics.font.Monaco {
+          + toString()
+      }
+    }
+  }
+  
+
+  namespace aesthetics {
+    namespace style {
+      class aesthetics.style.Normal {
+          + toString()
+      }
+    }
+  }
+
+
+  namespace aesthetics {
+    namespace style {
+      interface aesthetics.style.Style {
+          {abstract} + toString()
+      }
+    }
+  }
+  
+
+  namespace com.company {
+    class com.company.Main {
+        {static} + main()
+    }
+  }
+  
+
+  namespace editor {
+    class editor.Editor {
+        {static} - instance : Editor
+        {static} + getInstance()
+        + setLanguage()
+        + toString()
+        - Editor()
+    }
+  }
+  
+
+namespace language {
+    class language.C {
+        + create()
+        + createParser()
+        + toString()
+        ~ C()
+    }
+  }
+
+
+  namespace language {
+    class language.CPP {
+        + create()
+        + createParser()
+        + toString()
+        ~ CPP()
+    }
+  }
+
+
+  namespace language {
+    interface language.Language {
+        {abstract} + create()
+        {abstract} + createParser()
+        {abstract} + toString()
+    }
+  }
+
+
+  namespace language {
+    class language.LanguageFactory {
+        {static} + getLanguage()
+    }
+  }
+
+
+  namespace language {
+    class language.Python {
+        + create()
+        + createParser()
+        + toString()
+        ~ Python()
+    }
+  }
+
+
+  namespace language {
+    namespace parser {
+      class language.parser.CPPParser {
+          + toString()
+      }
+    }
+  }
+
+
+  namespace language {
+    namespace parser {
+      class language.parser.CParser {
+          + toString()
+      }
+    }
+  }
+
+
+  namespace language {
+    namespace parser {
+      interface language.parser.Parser {
+          {abstract} + toString()
+      }
+    }
+  }
+
+
+  namespace language {
+    namespace parser {
+      class language.parser.PythonParser {
+          + toString()
+      }
+    }
+  }
+  
+
+  aesthetics.CAesthetics .up.|> aesthetics.Aesthetics
+  aesthetics.CAesthetics o-- aesthetics.color.Color : color
+  aesthetics.CAesthetics o-- aesthetics.font.Font : font
+  aesthetics.CAesthetics o-- aesthetics.style.Style : style
+  aesthetics.CPPAesthetics .up.|> aesthetics.Aesthetics
+  aesthetics.CPPAesthetics o-- aesthetics.color.Color : color
+  aesthetics.CPPAesthetics o-- aesthetics.font.Font : font
+  aesthetics.CPPAesthetics o-- aesthetics.style.Style : style
+  aesthetics.PythonAesthetics .up.|> aesthetics.Aesthetics
+  aesthetics.PythonAesthetics o-- aesthetics.color.Color : color
+  aesthetics.PythonAesthetics o-- aesthetics.font.Font : font
+  aesthetics.PythonAesthetics o-- aesthetics.style.Style : style
+  aesthetics.color.Blue .up.|> aesthetics.color.Color
+  aesthetics.font.Consolas .up.|> aesthetics.font.Font
+  aesthetics.font.CourierNew .up.|> aesthetics.font.Font
+  aesthetics.font.Monaco .up.|> aesthetics.font.Font
+  aesthetics.style.Normal .up.|> aesthetics.style.Style
+  editor.Editor o-- aesthetics.Aesthetics : aesthetics
+  editor.Editor o-- language.Language : language
+  language.C .up.|> language.Language
+  language.C o-- language.parser.Parser : parser
+  language.CPP .up.|> language.Language
+  language.CPP o-- language.parser.Parser : parser
+  language.Python .up.|> language.Language
+  language.Python o-- language.parser.Parser : parser
+  language.parser.CPPParser .up.|> language.parser.Parser
+  language.parser.CParser .up.|> language.parser.Parser
+  language.parser.PythonParser .up.|> language.parser.Parser
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

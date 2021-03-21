@@ -1,10 +1,8 @@
-package factory;
+package teagaspackage;
 
-import teagaspackage.*;
+public class TeaGASPackageFactory {
 
-public class TeaGASPackageFactory extends TeaGASPackageAbstractFactory {
-
-    public TeaGASPackage getTeaGASPackage(String name)
+    public static TeaGASPackage getTeaGASPackage(String name)
     {
         TeaGASPackage t;
 
@@ -31,5 +29,4 @@ public class TeaGASPackageFactory extends TeaGASPackageAbstractFactory {
 
         return null;
     }
-
 }
