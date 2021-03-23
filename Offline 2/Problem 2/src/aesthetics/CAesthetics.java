@@ -7,7 +7,7 @@ import aesthetics.font.Font;
 import aesthetics.style.Normal;
 import aesthetics.style.Style;
 
-public class CAesthetics implements Aesthetics{
+public class CAesthetics implements Aesthetics {
 
     Font font;
     Style style;

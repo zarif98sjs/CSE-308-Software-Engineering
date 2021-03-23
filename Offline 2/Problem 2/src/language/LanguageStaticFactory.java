@@ -1,6 +1,6 @@
 package language;
 
-public class LanguageFactory {
+public class LanguageStaticFactory {
 
     public static Language getLanguage(String name)
     {

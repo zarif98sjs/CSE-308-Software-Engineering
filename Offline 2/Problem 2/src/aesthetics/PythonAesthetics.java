@@ -3,13 +3,11 @@ package aesthetics;
 import aesthetics.color.Blue;
 import aesthetics.color.Color;
 import aesthetics.font.Consolas;
-import aesthetics.font.CourierNew;
 import aesthetics.font.Font;
-import aesthetics.font.Monaco;
 import aesthetics.style.Normal;
 import aesthetics.style.Style;
 
-public class PythonAesthetics implements Aesthetics{
+public class PythonAesthetics implements Aesthetics {
 
     Font font;
     Style style;

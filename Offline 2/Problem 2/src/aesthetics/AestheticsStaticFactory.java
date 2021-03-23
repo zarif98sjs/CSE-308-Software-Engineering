@@ -1,11 +1,6 @@
 package aesthetics;
 
-import language.C;
-import language.CPP;
-import language.Language;
-import language.Python;
-
-public class AestheticsFactory {
+public class AestheticsStaticFactory {
 
     public static Aesthetics getAesthetics(String name)
     {
@@ -21,7 +16,6 @@ public class AestheticsFactory {
         {
             return new PythonAesthetics();
         }
-
         return null;
     }
 }

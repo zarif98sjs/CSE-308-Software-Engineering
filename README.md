@@ -8,7 +8,7 @@
 
  - Offline 2
   
-    **Creational Design Patter**
+    **Creational Design Pattern**
    - [Problem Statements](/Offline%202/Assignment%202%20on%20Creational%20Design%20Pattern.pdf)
    - [Problem 1 Solution](/Offline%202/Problem%201/src)
 

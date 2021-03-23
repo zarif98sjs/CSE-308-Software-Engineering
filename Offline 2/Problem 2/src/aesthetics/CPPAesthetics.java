@@ -2,13 +2,12 @@ package aesthetics;
 
 import aesthetics.color.Blue;
 import aesthetics.color.Color;
-import aesthetics.font.CourierNew;
 import aesthetics.font.Font;
 import aesthetics.font.Monaco;
 import aesthetics.style.Normal;
 import aesthetics.style.Style;
 
-public class CPPAesthetics implements Aesthetics{
+public class CPPAesthetics implements Aesthetics {
 
     Font font;
     Style style;

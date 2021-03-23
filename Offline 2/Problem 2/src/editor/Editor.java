@@ -1,7 +1,7 @@
 package editor;
 
 import aesthetics.Aesthetics;
-import aesthetics.AestheticsFactory;
+import aesthetics.AestheticsStaticFactory;
 import language.*;
 
 public class Editor {
@@ -24,17 +24,17 @@ public class Editor {
     public void setLanguage(String name)
     {
         if(name.equalsIgnoreCase("c")){
-            instance.language = LanguageFactory.getLanguage("C");
-            instance.aesthetics = AestheticsFactory.getAesthetics("C");
+            instance.language = LanguageStaticFactory.getLanguage("C");
+            instance.aesthetics = AestheticsStaticFactory.getAesthetics("C");
         }
         else if(name.equalsIgnoreCase("cpp")){
-            instance.language = LanguageFactory.getLanguage("CPP");
-            instance.aesthetics = AestheticsFactory.getAesthetics("CPP");
+            instance.language = LanguageStaticFactory.getLanguage("CPP");
+            instance.aesthetics = AestheticsStaticFactory.getAesthetics("CPP");
 
         }
         else if(name.equalsIgnoreCase("python")){
-            instance.language = LanguageFactory.getLanguage("Python");
-            instance.aesthetics = AestheticsFactory.getAesthetics("Python");
+            instance.language = LanguageStaticFactory.getLanguage("Python");
+            instance.aesthetics = AestheticsStaticFactory.getAesthetics("Python");
         }
     }
 
