@@ -11,23 +11,23 @@ title __APPETIZER's Class Diagram__\n
 
   namespace Appetizer {
     class Appetizer.FrenchFry {
+        + FrenchFry()
         + getCost()
         + getDescription()
-        ~ FrenchFry()
     }
   }
   
 
   namespace Appetizer {
     class Appetizer.OnionRing {
+        + OnionRing()
         + getCost()
         + getDescription()
-        ~ OnionRing()
     }
   }
   
 
-  Appetizer.AppetizerDecorator -up-|> Pizza.Pizza
+  Appetizer.AppetizerDecorator -up-|> Decorator.Decorator
   Appetizer.FrenchFry -up-|> Appetizer.AppetizerDecorator
   Appetizer.FrenchFry o-- Pizza.Pizza : pizza
   Appetizer.OnionRing -up-|> Appetizer.AppetizerDecorator

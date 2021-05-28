@@ -1,7 +1,7 @@
 package Appetizer;
 
-import Pizza.Pizza;
+import Decorator.Decorator;
 
-public abstract class AppetizerDecorator extends Pizza {
-    public abstract String getDescription();
+public abstract class AppetizerDecorator extends Decorator {
+
 }

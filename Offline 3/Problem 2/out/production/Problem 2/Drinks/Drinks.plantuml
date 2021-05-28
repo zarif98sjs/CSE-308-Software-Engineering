@@ -4,18 +4,18 @@ title __DRINKS's Class Diagram__\n
 
   namespace Drinks {
     class Drinks.Coffee {
+        + Coffee()
         + getCost()
         + getDescription()
-        ~ Coffee()
     }
   }
   
 
   namespace Drinks {
     class Drinks.Coke {
+        + Coke()
         + getCost()
         + getDescription()
-        ~ Coke()
     }
   }
   
@@ -31,7 +31,7 @@ title __DRINKS's Class Diagram__\n
   Drinks.Coffee o-- Pizza.Pizza : pizza
   Drinks.Coke -up-|> Drinks.DrinksDecorator
   Drinks.Coke o-- Pizza.Pizza : pizza
-  Drinks.DrinksDecorator -up-|> Pizza.Pizza
+  Drinks.DrinksDecorator -up-|> Decorator.Decorator
 
 
 right footer

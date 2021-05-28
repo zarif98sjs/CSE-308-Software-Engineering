@@ -4,8 +4,8 @@ title __PIZZA's Class Diagram__\n
 
   namespace Pizza {
     class Pizza.BeefPizza {
+        + BeefPizza()
         + getCost()
-        ~ BeefPizza()
     }
   }
   
@@ -21,8 +21,8 @@ title __PIZZA's Class Diagram__\n
 
   namespace Pizza {
     class Pizza.VeggiPizza {
+        + VeggiPizza()
         + getCost()
-        ~ VeggiPizza()
     }
   }
   

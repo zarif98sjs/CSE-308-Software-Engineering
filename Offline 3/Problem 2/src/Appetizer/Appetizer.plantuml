@@ -27,7 +27,7 @@ title __APPETIZER's Class Diagram__\n
   }
   
 
-  Appetizer.AppetizerDecorator -up-|> Pizza.Pizza
+  Appetizer.AppetizerDecorator -up-|> Decorator.Decorator
   Appetizer.FrenchFry -up-|> Appetizer.AppetizerDecorator
   Appetizer.FrenchFry o-- Pizza.Pizza : pizza
   Appetizer.OnionRing -up-|> Appetizer.AppetizerDecorator

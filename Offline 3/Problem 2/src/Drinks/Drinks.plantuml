@@ -31,7 +31,7 @@ title __DRINKS's Class Diagram__\n
   Drinks.Coffee o-- Pizza.Pizza : pizza
   Drinks.Coke -up-|> Drinks.DrinksDecorator
   Drinks.Coke o-- Pizza.Pizza : pizza
-  Drinks.DrinksDecorator -up-|> Pizza.Pizza
+  Drinks.DrinksDecorator -up-|> Decorator.Decorator
 
 
 right footer
