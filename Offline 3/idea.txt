@@ -1,0 +1,28 @@
+Main Interface 1 -> for INT
+	- calc(File)
+
+Integer one that will implement the main Interface 1
+	- calc(File) -> this implemntation will treat everything as integer
+
+Main Interface 2 -> for ASCII
+	- calc(File)
+
+ASCII one that will implement the main Interface 2
+	- calc(File) -> this implemntation will treat everything as ASCII
+
+Now comes the adapter , it will implement the main Interface 1
+
+=======================================
+
+IntegerFile Class
+	- getFile
+
+CharFile Class
+	- getFile
+
+CalcInt Class
+	- calc(IntegerFile) -> this implemntation will treat everything as integer
+
+AdapterClass extends IntegerFile
+	// override
+	- getFile -> convert to ascii
