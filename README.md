@@ -32,7 +32,8 @@
       
      ![](Offline%203/Problem%202/Problem_2.png)
 
-  - ## **`Offline 4`**
+
+- ## **`Offline 4`**
   
     **Behavioral Design Pattern**
    - [Problem Statements](Offline%204/Jan_2021_CSE_308_Behavioural_Design_Patterns.pdf)
