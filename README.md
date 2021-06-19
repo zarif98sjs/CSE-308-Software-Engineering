@@ -28,6 +28,18 @@
 
      ![](Offline%203/Problem%201/Problem_1.png)
 
-   - [Problem 2 Solution](/Offline%202/Problem%202/src) : **Decorator Design Pattern**
+   - [Problem 2 Solution](/Offline%203/Problem%202/src) : **Decorator Design Pattern**
       
      ![](Offline%203/Problem%202/Problem_2.png)
+
+  - ## **`Offline 4`**
+  
+    **Behavioral Design Pattern**
+   - [Problem Statements](Offline%204/Jan_2021_CSE_308_Behavioural_Design_Patterns.pdf)
+   - [Problem 1 Solution](Offline%204/Problem%201/src) : **Observer Design Pattern**
+
+     ![](Offline%204/Problem%201/Offline_4__Problem_1.png)
+
+   - [Problem 2 Solution](/Offline%204/Problem%202/src) : **Mediator Design Pattern**
+      
+     ![](Offline%204/Problem%202/Offline_4__Problem_2.png)
