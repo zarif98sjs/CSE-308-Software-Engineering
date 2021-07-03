@@ -10,11 +10,11 @@
   
     **Creational Design Pattern**
    - [Problem Statements](/Offline%202/Assignment%202%20on%20Creational%20Design%20Pattern.pdf)
-   - [Problem 1 Solution](/Offline%202/Problem%201/src)
+   - [Problem 1 Solution](/Offline%202/Problem%201/src) : **Abstract Factory + Builder Design Pattern**
 
      ![](Offline%202/Problem%201/uml_class_diagram_simplified.png)
 
-   - [Problem 2 Solution](/Offline%202/Problem%202/src)
+   - [Problem 2 Solution](/Offline%202/Problem%202/src) : **Singleton + Abstract Factory Design Pattern**
       
       ![](Offline%202/Problem%202/uml_class_diagam_simplified.png)
 
