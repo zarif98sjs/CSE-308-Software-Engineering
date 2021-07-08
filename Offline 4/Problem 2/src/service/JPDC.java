@@ -30,6 +30,7 @@ public class JPDC implements Service{
 
     @Override
     public Service serveRequest() {
+        // service
         return mediator.serveRequest(organizationName);
     }
 
