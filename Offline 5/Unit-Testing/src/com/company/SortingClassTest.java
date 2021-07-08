@@ -3,28 +3,24 @@ package com.company;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RunWith(Parameterized.class)
 public class SortingClassTest {
 
     private List inputList;
-    private List expectedList;
     private String message;
 
     private SortingClass sortingClass;
     private static SortingClassTestGenerator sortingClassTestGenerator;
 
-    public SortingClassTest(String message,List inputList, List expectedList)
+    public SortingClassTest(String message,List inputList)
     {
         super();
         this.message = message;
         this.inputList = inputList;
-        this.expectedList = expectedList;
     }
 
     @org.junit.Before
@@ -35,14 +31,24 @@ public class SortingClassTest {
     @Parameterized.Parameters
     public static Collection input(){
         return Arrays.asList(new Object[][] {
-                {"SortOneNumber",SortingClassTestGenerator.getOneNumber(),Arrays.asList(4)},
-                {"SortTwoNumber",SortingClassTestGenerator.getTwoNumber(),Arrays.asList(21,3432)}
+                {"Sort Blank List",SortingClassTestGenerator.getBlankList()},
+                {"Sort One Number",SortingClassTestGenerator.getOneNumber()},
+                {"Sort Two Number",SortingClassTestGenerator.getTwoNumber()},
+                {"Sort Random Sized List",SortingClassTestGenerator.getRandomSizeList()},
+                {"Sort Random List",SortingClassTestGenerator.getRandomList()},
+                {"Sort Ascending List",SortingClassTestGenerator.getSortedAscending()},
+                {"Sort Descending List",SortingClassTestGenerator.getSortedDescending()}
         });
     }
 
     @org.junit.Test
     public void sort() {
-        assertEquals(message,expectedList,sortingClass.sort(inputList));
+
+        List<Integer>listIn = new ArrayList<Integer>(inputList);
+        List<Integer>listOut = sortingClass.sort(inputList);
+
+        assertTrue(message +": List altered",checkNotAltered(listIn,listOut));
+        assertTrue(message +": List not sorted",checkSortedAscending(listOut));
     }
 
     @org.junit.After

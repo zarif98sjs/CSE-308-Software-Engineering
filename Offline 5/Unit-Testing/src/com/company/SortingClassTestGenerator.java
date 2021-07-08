@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -27,9 +28,9 @@ public class SortingClassTestGenerator {
     static List<Integer> getRandomSizeList()
     {
         Random generator = new Random(1705010);
-        Integer listSize = generator.nextInt();
+        Integer listSize = generator.nextInt() % 50;
 
-        List<Integer>list = Arrays.asList();
+        List<Integer>list = new ArrayList<>();
 
         for(int i=0;i<listSize;i++)
         {
@@ -44,7 +45,7 @@ public class SortingClassTestGenerator {
         Random generator = new Random(1705010);
         Integer listSize = 15;
 
-        List<Integer>list = Arrays.asList();
+        List<Integer>list = new ArrayList<>();
 
         for(int i=0;i<listSize;i++)
         {
