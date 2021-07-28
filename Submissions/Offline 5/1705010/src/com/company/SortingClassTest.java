@@ -59,8 +59,6 @@ public class SortingClassTest {
     public void tearDown() throws Exception {
         sortingClass = null;
     }
-    // 2 2 3 4
-    // 3 4 2 2
 
     boolean checkNotAltered(List listIn,List listOut)
     {
